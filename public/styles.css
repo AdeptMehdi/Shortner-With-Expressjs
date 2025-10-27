@@ -1,5 +1,10 @@
 /* Custom CSS for Link Shortener */
 
+/* Vazir Font */
+body {
+    font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif !important;
+}
+
 /* RTL Support */
 [dir="rtl"] .space-x-3 > * + * {
     margin-right: 0.75rem;

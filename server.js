@@ -14,10 +14,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com", "https://cdn.jsdelivr.net", "data:"],
       scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
       imgSrc: ["'self'", "data:", "https:"],
-      fontSrc: ["'self'", "https:"],
+      fontSrc: ["'self'", "https:", "https://cdn.jsdelivr.net", "data:"],
       connectSrc: ["'self'"],
     },
   },
@@ -29,8 +29,14 @@ app.use(cors(config.security.cors));
 // Rate limiting
 app.use(createRateLimit);
 
-// Serve static files from public directory
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files from public directory with proper MIME types
+app.use(express.static(path.join(__dirname, 'public'), {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  }
+}));
 
 // Custom middleware
 app.use(requestLogging);

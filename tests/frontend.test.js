@@ -3,30 +3,14 @@
  * Tests the JavaScript functionality and API integration
  */
 
-// Mock DOM environment for testing
-const { JSDOM } = require('jsdom');
 const fs = require('fs');
 const path = require('path');
 
-// Setup DOM environment
+// Load the HTML file
 const html = fs.readFileSync(path.resolve(__dirname, '../public/index.html'), 'utf8');
-const { window } = new JSDOM(html, {
-  url: 'http://localhost:4000',
-  pretendToBeVisual: true,
-  resources: 'usable'
-});
 
-global.window = window;
-global.document = window.document;
-global.navigator = window.navigator;
-global.HTMLElement = window.HTMLElement;
-global.HTMLInputElement = window.HTMLInputElement;
-global.Event = window.Event;
-global.CustomEvent = window.CustomEvent;
-
-// Mock fetch for testing
-global.fetch = require('jest-fetch-mock');
-require('jest-fetch-mock').enableMocks();
+// Setup DOM environment (using the setup file)
+document.body.innerHTML = html;
 
 // Load the script
 require('../public/script.js');
