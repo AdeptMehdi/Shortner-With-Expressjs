@@ -10,11 +10,7 @@
     "test:frontend": "jest tests/frontend.test.js"
   },
   "jest": {
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "tests/frontend.test.js"
-    ],
-    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"]
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
