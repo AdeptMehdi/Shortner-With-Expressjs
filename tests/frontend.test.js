@@ -9,7 +9,7 @@ const path = require('path');
 // Load the HTML file
 const html = fs.readFileSync(path.resolve(__dirname, '../public/index.html'), 'utf8');
 
-// Setup DOM environment (using the setup file)
+// Setup DOM environment
 document.body.innerHTML = html;
 
 // Load the script
