@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 const config = require('./config');
 const { requestLogging, customBodyParser, createRateLimit } = require('./middleware');
 const shortnerRoutes = require('./routes/shortnerRoutes');
@@ -13,9 +14,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
       imgSrc: ["'self'", "data:", "https:"],
+      fontSrc: ["'self'", "https:"],
+      connectSrc: ["'self'"],
     },
   },
 }));
@@ -25,6 +28,9 @@ app.use(cors(config.security.cors));
 
 // Rate limiting
 app.use(createRateLimit);
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Custom middleware
 app.use(requestLogging);
